@@ -1,0 +1,43 @@
+transforms {
+    dbName {
+        collection1 {
+            anonymize {
+                email = email
+                checkoutId = str
+                facebookId = str
+                googleId = str
+                firstname = firstname
+                lastname = lastname
+                defaultCardId = str
+                checkoutCards = [
+                    str
+                ]
+                lunchCheckCards = [
+                    str
+                ]
+                password = str
+                mailToken = str
+                tokenValidator = str
+                phones = [
+                    phone
+                ]
+                playerID = str
+            }
+        }
+        collection2 {
+            anonymize {
+                firstname = firstname
+                lastname = lastname
+                email = email
+                phones = [
+                    phone
+                ]
+            }
+        }
+        collectionN {
+            anonymize {
+                email = email
+            }
+        }
+    }
+}
