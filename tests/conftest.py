@@ -2,10 +2,9 @@ from os import environ
 from pathlib import Path
 import shutil
 
+from datacycle.providers import mongo
+from datacycle.providers import postgres
 import pytest
-from recycle.providers import mongo
-from recycle.providers import postgres
-
 
 test_mongo_host = environ.get(
     "TEST_MONGO_HOST", "mongodb://user:password@localhost:27017"
@@ -16,8 +15,8 @@ test_postgres_host = environ.get(
 
 mongo_test1 = f"{test_mongo_host}/test1?authSource=admin"
 mongo_test2 = f"{test_mongo_host}/test2?authSource=admin"
-gcs_test1 = "gs://smood-recycle-test/test1"
-gcs_test2 = "gs://smood-recycle-test/test2"
+gcs_test1 = "gs://datacycle/test1"
+gcs_test2 = "gs://datacycle/test2"
 local_test1 = "./test1"
 local_test2 = "./test2"
 postgres_test = f"{test_postgres_host}/test"
@@ -49,3 +48,10 @@ def clean_fs():
         if Path(file).exists():
             shutil.rmtree(file)
     yield
+
+
+def require_env_var(name):
+    return pytest.mark.skipif(
+        name not in environ,
+        reason=f"{name} not found in environ variables"
+    )

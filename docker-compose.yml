@@ -1,10 +1,7 @@
-
-version: '3.1'
-
 services:
 
   mongo:
-    image: mongo:4.2
+    image: mongo:4
     ports:
       - 27017:27017
     environment:
@@ -12,7 +9,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
 
   postgres:
-    image: postgres:13
+    image: postgres:14
     ports:
       - 5432:5432
     environment:

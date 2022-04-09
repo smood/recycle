@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 import shutil
 
-from recycle.providers import postgres
+from datacycle.providers import postgres
 from tests.conftest import postgres_test1
 from tests.utils import seed_postgres
 

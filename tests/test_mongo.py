@@ -5,8 +5,8 @@ from pathlib import Path
 import shutil
 
 import bson
+from datacycle.providers import mongo
 from dictdiffer import diff
-from recycle.providers import mongo
 from tests.conftest import mongo_test1
 from tests.utils import seed_mongo
 

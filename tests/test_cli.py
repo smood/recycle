@@ -5,11 +5,11 @@ from pathlib import Path
 import random
 
 import bson
+from datacycle.main import cli
+from datacycle.providers import gcs
+from datacycle.providers import mongo
 import pytest
-from recycle.main import cli
-from recycle.providers import gcs
-from recycle.providers import mongo
-from tests.conftest import gcs_test1
+from tests.conftest import gcs_test1, require_env_var
 from tests.conftest import gcs_test2
 from tests.conftest import local_test1
 from tests.conftest import local_test2
@@ -49,6 +49,7 @@ class TestCli:
         assert db1.count_documents({}) == 50
         assert db2.count_documents({}) == 50
 
+    @require_env_var(gcs.SA_ENV)
     def test_mongo_gcs(self, caplog, clean_mongo, clean_fs, snapshot):
 
         seed_mongo(mongo_test1, "collection", 50)
@@ -76,6 +77,7 @@ class TestCli:
             f"{local_test1.lstrip('./')}/{snapshot}/collection.metadata.json.gz",
         ]
 
+    @require_env_var(gcs.SA_ENV)
     def test_gcs_mongo(self, caplog, clean_mongo, clean_fs, snapshot):
 
         self.test_mongo_gcs(caplog, clean_mongo, clean_fs, snapshot)
@@ -88,6 +90,7 @@ class TestCli:
 
         assert db2.count_documents({}) == 50
 
+    @require_env_var(gcs.SA_ENV)
     def test_gcs_gcs(self, caplog, clean_mongo, clean_fs, snapshot):
 
         self.test_mongo_gcs(caplog, clean_mongo, clean_fs, snapshot)
@@ -102,6 +105,7 @@ class TestCli:
             f"{gcs_test2}/{snapshot}/collection.metadata.json.gz",
         ]
 
+    @require_env_var(gcs.SA_ENV)
     def test_gcs_fs(self, caplog, clean_mongo, clean_fs, snapshot):
 
         self.test_mongo_gcs(caplog, clean_mongo, clean_fs, snapshot)
@@ -126,6 +130,7 @@ class TestCli:
 
         assert db2.count_documents({}) == 50
 
+    @require_env_var(gcs.SA_ENV)
     def test_fs_gcs(self, caplog, clean_mongo, clean_fs, snapshot):
 
         self.test_mongo_fs(caplog, clean_mongo, clean_fs, snapshot)

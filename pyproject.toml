@@ -1,34 +1,58 @@
 [tool.poetry]
-name = "recycle"
-version = "0.1.0"
-description = ""
+name = "datacycle"
+version = "0.0.1"
+description = "General toolset to backup & restore with random/filtered/anonymized data (Mongo/Postgres/GCS)."
 authors = []
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/smood/recycle"
+include = [
+    "datacycle", "pyproject.toml"
+]
+classifiers = [
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.10"
-Faker = "^8.1.2"
-pymongo = "^3.11.3"
-SQLAlchemy = "^1.4.13"
-pg8000 = "^1.19.4"
+python = ">=3.8,<3.11"
+Faker = "^13.3.4"
+pymongo = "^4.1.0"
+SQLAlchemy = { version = "^1.4.13", optional = true }
+pg8000 = { version = "^1.19.4", optional = true }
 tdqm = "^0.0.1"
-typer = "^0.3.2"
+typer = "^0.4.1"
 furl = "^2.1.2"
-dataconf = "^0.1.2"
+dataconf = "^1.4.0"
 sqlparse = "^0.4.1"
-google-cloud-bigquery = {version = "^2.22.0", extras = ["bigquery"]}
-joblib = "^1.0.1"
-dnspython = "^2.1.0"
+gsutil = { version = "^5.9", optional = true }
+
+[tool.poetry.extras]
+postgres = ["SQLAlchemy", "pg8000"]
+mongo = ["pymongo"]
+google = ["gsutil"]
 
 [tool.poetry.dev-dependencies]
-flake8 = "^3.9.1"
-pytest = "^6.2.3"
-black = "^21.4b2"
-dictdiffer = "^0.8.1"
-pre-commit = "^2.12.1"
-pytest-cov = "^2.11.1"
+flake8 = "^4.0.1"
+pytest = "^7.1.1"
+black = "^22.3.0"
+dictdiffer = "^0.9.0"
+pre-commit = "^2.18.1"
+pytest-cov = "^3.0.0"
+pytest-dotenv = "^0.5.2"
 
 [tool.poetry.scripts]
-recycle = 'recycle.main:cli'
+datacycle = 'datacycle.main:cli'
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.0.1"
+tag_format = "v$major.$minor.$patch$prerelease"
+version_files = [
+    "pyproject.toml:version",
+    "datacycle/version.py"
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

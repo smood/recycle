@@ -3,14 +3,14 @@ from contextlib import contextmanager
 import os
 import tempfile
 
-from recycle.utils import shell
+from datacycle.utils import shell
 
 CSEK_ENV = "GOOGLE_STORAGE_CSEK"
 SA_ENV = "GOOGLE_APPLICATION_CREDENTIALS"
 
 
 @contextmanager
-def service_account(bytes_content, decode64=True):
+def service_account(bytes_content, decode64=False):
     fd, tmp_fpath = tempfile.mkstemp()
     os.close(fd)
 
@@ -19,6 +19,8 @@ def service_account(bytes_content, decode64=True):
             with open(tmp_fpath, "wb") as f:
                 if decode64:
                     bytes_content = base64.b64decode(bytes_content)
+                else:
+                    bytes_content = bytes_content.encode()
 
                 f.write(bytes_content)
 

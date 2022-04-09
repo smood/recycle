@@ -1,4 +1,4 @@
-# Recycle
+# Datacycle
 
 ## Getting started
 
@@ -7,22 +7,22 @@ cp .env.example .env
 vim .env
 source .env
 
-poetry install
-poetry run recycle
+poetry install -E "postgres mongo google"
+poetry run datacycle
 ```
 
 ```
-docker build -f Dockerfile -t recycle .
-docker run -it --rm --env-file .env recycle
+docker build -f Dockerfile -t datacycle .
+docker run -it --rm --env-file .env datacycle
 ```
 
 ### Mac requirements
 
 ```
-brew tap mongodb/brew && brew install mongodb-database-tools
-brew install libpq && brew link --force libpq
+brew install mongodb/brew/mongodb-database-tools
+brew install libpq
+brew link --force libpq
 npm install elasticdump -g
-pip3 install gsutil
 ```
 
 ### Linux requirements
@@ -30,17 +30,16 @@ pip3 install gsutil
 ```
 apt install -y mongo-tools
 apt install -y postgresql-client
-pip3 install gsutil
 npm install elasticdump -g
 ```
 
 ## How to
 
 ```
-recycle --help
-recycle doctor
+datacycle --help
+datacycle doctor
 
-recycle mongo "mongodb://user:password@localhost:27017/test1?authSource=admin" "mongodb://user:password@localhost:27017/test2?authSource=admin" --transform "
+datacycle mongo "mongodb://user:password@localhost:27017/test1?authSource=admin" "mongodb://user:password@localhost:27017/test2?authSource=admin" --transform "
     transforms {
         test1 {
             before-transform {}
@@ -48,19 +47,19 @@ recycle mongo "mongodb://user:password@localhost:27017/test1?authSource=admin" "
     }
 "
 
-recycle mongo mongodb://user:password@localhost:27017/test1?authSource=admin gs://smood-recycle-test/test1/snapshot --transform ops.hocon
+datacycle mongo mongodb://user:password@localhost:27017/test1?authSource=admin gs://datacycle-test/test1/snapshot --transform ops.hocon
 
-recycle mongo mongodb://user:password@localhost:27017/test1?authSource=admin mongodb://user:password@localhost:27017/test2?authSource=admin
-recycle mongo mongodb://user:password@localhost:27017/test1?authSource=admin gs://smood-recycle-test/test1/snapshot
-recycle mongo mongodb://user:password@localhost:27017/test1?authSource=admin test1/snapshot
+datacycle mongo mongodb://user:password@localhost:27017/test1?authSource=admin mongodb://user:password@localhost:27017/test2?authSource=admin
+datacycle mongo mongodb://user:password@localhost:27017/test1?authSource=admin gs://datacycle-test/test1/snapshot
+datacycle mongo mongodb://user:password@localhost:27017/test1?authSource=admin test1/snapshot
 
-recycle mongo gs://smood-recycle-test/test1/snapshot mongodb://user:password@localhost:27017/test2?authSource=admin
-recycle mongo gs://smood-recycle-test/test1/snapshot gs://smood-recycle-test/test2/snapshot
-recycle mongo gs://smood-recycle-test/test1/snapshot test2/snapshot
+datacycle mongo gs://datacycle-test/test1/snapshot mongodb://user:password@localhost:27017/test2?authSource=admin
+datacycle mongo gs://datacycle-test/test1/snapshot gs://datacycle-test/test2/snapshot
+datacycle mongo gs://datacycle-test/test1/snapshot test2/snapshot
 
-recycle mongo test1/snapshot mongodb://user:password@localhost:27017/test2?authSource=admin
-recycle mongo test1/snapshot gs://smood-recycle-test/test2/snapshot
-recycle mongo test1/snapshot test2/snapshot
+datacycle mongo test1/snapshot mongodb://user:password@localhost:27017/test2?authSource=admin
+datacycle mongo test1/snapshot gs://datacycle-test/test2/snapshot
+datacycle mongo test1/snapshot test2/snapshot
 ```
 
 ## Providers

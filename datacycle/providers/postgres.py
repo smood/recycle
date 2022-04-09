@@ -1,7 +1,7 @@
 import logging
 
-from recycle import config
-from recycle.utils import shell
+from datacycle import config
+from datacycle.utils import shell
 from sqlalchemy import create_engine
 from sqlalchemy.pool import NullPool
 import sqlparse

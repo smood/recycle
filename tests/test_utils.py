@@ -1,4 +1,4 @@
-from recycle.utils import fake_like_gen
+from datacycle.utils import fake_like_gen
 
 
 class TestUtils:
